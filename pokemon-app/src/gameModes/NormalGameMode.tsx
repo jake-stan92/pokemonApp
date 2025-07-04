@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import og151 from "../assets/og151";
 import { useEffect, useState, useCallback } from "react";
 import type { SinglePokemon } from "../components/GameContainerTypes";
@@ -27,47 +26,49 @@ function NormalGameMode() {
   };
 
   const playRound = useCallback(() => {
-    setSelectedAnswer(""); // Reset selection
+    setSelectedAnswer(""); // Reset user guess
 
-    setRemainingPokemon((prev) => {
-      if (prev.length === 0) {
-        setGameOver(true);
-        return [];
+    // End game if all Pokémon have been used
+    if (remainingPokemon.length === 0) {
+      setGameOver(true);
+      setActivePokemon(null);
+      setAllAnswers([]);
+      return;
+    }
+
+    // Pick a new active Pokémon from the remaining pool
+    const randomIndex = Math.floor(Math.random() * remainingPokemon.length);
+    const newActive = remainingPokemon[randomIndex];
+    setActivePokemon(newActive);
+
+    // Remove the selected Pokémon from the remaining pool
+    const updatedRemaining = remainingPokemon.filter(
+      (p) => p.name !== newActive.name
+    );
+    setRemainingPokemon(updatedRemaining);
+
+    // Get 3 unique incorrect answers from the full pool
+    const incorrectAnswers: SinglePokemon[] = [];
+    while (incorrectAnswers.length < 3) {
+      const candidate =
+        allPokemon[Math.floor(Math.random() * allPokemon.length)];
+      if (
+        candidate.name !== newActive.name &&
+        !incorrectAnswers.some((p) => p.name === candidate.name)
+      ) {
+        incorrectAnswers.push(candidate);
       }
+    }
 
-      // Pick random active Pokémon from remaining
-      const randomIndex = Math.floor(Math.random() * prev.length);
-      const newActive = prev[randomIndex];
-      setActivePokemon(newActive);
+    // Combine correct and incorrect answers, then shuffle
+    const options = [newActive, ...incorrectAnswers];
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
 
-      const updatedRemaining = prev.filter(
-        (pokemon) => pokemon.name !== newActive.name
-      );
-
-      // Get 3 incorrect answers from the FULL POKEDEX
-      const incorrectAnswers: SinglePokemon[] = [];
-      while (incorrectAnswers.length < 3) {
-        const candidate =
-          allPokemon[Math.floor(Math.random() * allPokemon.length)];
-        if (
-          candidate.name !== newActive.name &&
-          !incorrectAnswers.some((p) => p.name === candidate.name)
-        ) {
-          incorrectAnswers.push(candidate);
-        }
-      }
-
-      // Combine and shuffle
-      const options = [newActive, ...incorrectAnswers];
-      for (let i = options.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [options[i], options[j]] = [options[j], options[i]];
-      }
-
-      setAllAnswers(options);
-      return updatedRemaining;
-    });
-  }, [allPokemon]);
+    setAllAnswers(options);
+  }, [remainingPokemon, allPokemon]);
 
   useEffect(() => {
     if (!selectedAnswer || !activePokemon) return;

@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect } from "react";
+import React from "react";
 import NormalGameMode from "../gameModes/NormalGameMode";
-import type { SinglePokemon } from "./GameContainerTypes";
-import og151 from "../assets/og151";
 
 function GameContainer() {
   const [gameMode, setGameMode] = React.useState<string>("");
-  const [gameModeChosen, setGameModeChosen] = React.useState<boolean>(false);
+  const [gameModeChosen] = React.useState<boolean>(false);
   // const allPokemon: SinglePokemon[] = og151;
 
   return (
