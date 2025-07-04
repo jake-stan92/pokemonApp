@@ -84,10 +84,10 @@ function NormalGameMode() {
 
   // Start first round when game starts
   useEffect(() => {
-    if (gameStarted) {
+    if (gameStarted && remainingPokemon.length > 0 && !activePokemon) {
       playRound();
     }
-  }, [gameStarted, playRound]);
+  }, [gameStarted, remainingPokemon, playRound, activePokemon]);
 
   return (
     <>
