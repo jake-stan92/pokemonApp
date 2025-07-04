@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from "react";
 import NormalGameMode from "../gameModes/NormalGameMode";
 import type { SinglePokemon } from "./GameContainerTypes";

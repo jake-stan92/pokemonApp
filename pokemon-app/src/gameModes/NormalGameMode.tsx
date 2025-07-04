@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import og151 from "../assets/og151";
 import { useEffect, useState, useCallback } from "react";
 import type { SinglePokemon } from "../components/GameContainerTypes";
