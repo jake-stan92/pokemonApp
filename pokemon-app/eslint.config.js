@@ -25,6 +25,7 @@ export default tseslint.config([
     },
     rules: {
       "prettier/prettier": "warn",
+      "comma-dangle": ["error", "always-multiline"],
     },
   },
 ]);

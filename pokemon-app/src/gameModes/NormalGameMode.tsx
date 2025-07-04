@@ -65,12 +65,12 @@ function NormalGameMode() {
         ],
       },
     ],
-    []
+    [],
   );
 
   const [remainingPokemon, setRemainingPokemon] = useState<SinglePokemon[]>([]);
   const [activePokemon, setActivePokemon] = useState<SinglePokemon | null>(
-    null
+    null,
   );
   const [allAnswers, setAllAnswers] = useState<SinglePokemon[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
@@ -108,7 +108,7 @@ function NormalGameMode() {
 
       setActivePokemon(chosenPokemon);
       setRemainingPokemon(
-        pokemonPool.filter((p) => p.name !== chosenPokemon.name)
+        pokemonPool.filter((p) => p.name !== chosenPokemon.name),
       );
 
       // Create 3 incorrect answers
@@ -134,7 +134,7 @@ function NormalGameMode() {
 
       setAllAnswers(options);
     },
-    [allPokemon]
+    [allPokemon],
   );
 
   // On game start or after correct guess
@@ -149,7 +149,7 @@ function NormalGameMode() {
       activePokemon === null
     ) {
       const randomQuoteIndex = Math.floor(
-        Math.random() * gameEndQuotes[4].quotes.length
+        Math.random() * gameEndQuotes[4].quotes.length,
       );
       const quote = gameEndQuotes[4].quotes[randomQuoteIndex];
       setGameEndQuote(quote);
@@ -177,11 +177,11 @@ function NormalGameMode() {
         gameEndQuotes.find(
           (group) =>
             percentScore >= group.minScorePercent &&
-            percentScore < group.maxScorePercent
+            percentScore < group.maxScorePercent,
         ) ?? gameEndQuotes[0];
 
       const randomQuoteIndex = Math.floor(
-        Math.random() * quoteGroup.quotes.length
+        Math.random() * quoteGroup.quotes.length,
       );
       const quote = quoteGroup.quotes[randomQuoteIndex];
       setGameEndQuote(quote);

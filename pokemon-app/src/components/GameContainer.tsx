@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import NormalGameMode from "../gameModes/NormalGameMode";
 
 function GameContainer() {
   const [gameMode, setGameMode] = React.useState<string>("");
   const [gameModeChosen] = React.useState<boolean>(false);
-  // const allPokemon: SinglePokemon[] = og151;
-
   return (
     <>
       {!gameModeChosen && (
