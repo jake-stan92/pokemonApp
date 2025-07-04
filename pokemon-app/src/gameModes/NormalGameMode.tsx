@@ -3,7 +3,8 @@ import { useEffect, useState, useCallback } from "react";
 import type { SinglePokemon } from "../components/GameContainerTypes";
 
 function NormalGameMode() {
-  const allPokemon: SinglePokemon[] = og151;
+  // Limit pool for testing — change slice size as needed
+  const allPokemon: SinglePokemon[] = og151.slice(0, 4); // must be at least 4 for multiple options portion of test
 
   const [remainingPokemon, setRemainingPokemon] = useState<SinglePokemon[]>([]);
   const [activePokemon, setActivePokemon] = useState<SinglePokemon | null>(
@@ -12,105 +13,117 @@ function NormalGameMode() {
   const [allAnswers, setAllAnswers] = useState<SinglePokemon[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
   const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [gameCompleted, setGameCompleted] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
 
   const startGame = () => {
-    setGameOver(false);
-    setActivePokemon(null); // Clear previous pokemon
-    setSelectedAnswer(""); // Clear previous guess
-    setAllAnswers([]); // Clear answer buttons
-    setScore(0);
-    setRemainingPokemon(allPokemon);
-    setGameStarted(true); // Triggers useEffect to start the first round
-  };
-
-  const playRound = useCallback(() => {
-    setSelectedAnswer(""); // Reset user guess
-
-    // End game if all Pokémon have been used
-    if (remainingPokemon.length === 0) {
-      setGameOver(true);
-      setActivePokemon(null);
-      setAllAnswers([]);
+    if (allPokemon.length < 4) {
+      alert("You need at least 4 Pokémon to play!");
       return;
     }
+    setGameOver(false);
+    setGameCompleted(false);
+    setGameStarted(true);
+    setScore(0);
+    setSelectedAnswer("");
+    setAllAnswers([]);
+    setActivePokemon(null);
+    setRemainingPokemon([...allPokemon]); // reset the pool
+  };
 
-    // Pick a new active Pokémon from the remaining pool
-    const randomIndex = Math.floor(Math.random() * remainingPokemon.length);
-    const newActive = remainingPokemon[randomIndex];
-    setActivePokemon(newActive);
-
-    // Remove the selected Pokémon from the remaining pool
-    const updatedRemaining = remainingPokemon.filter(
-      (p) => p.name !== newActive.name
-    );
-    setRemainingPokemon(updatedRemaining);
-
-    // Get 3 unique incorrect answers from the full pool
-    const incorrectAnswers: SinglePokemon[] = [];
-    while (incorrectAnswers.length < 3) {
-      const candidate =
-        allPokemon[Math.floor(Math.random() * allPokemon.length)];
-      if (
-        candidate.name !== newActive.name &&
-        !incorrectAnswers.some((p) => p.name === candidate.name)
-      ) {
-        incorrectAnswers.push(candidate);
+  const playRound = useCallback(
+    (pool: SinglePokemon[]) => {
+      if (pool.length === 0) {
+        return;
       }
+
+      const randomIndex = Math.floor(Math.random() * pool.length);
+      const chosen = pool[randomIndex];
+
+      setActivePokemon(chosen);
+      setRemainingPokemon(pool.filter((p) => p.name !== chosen.name));
+
+      // Create 3 incorrect answers
+      const incorrectAnswers: SinglePokemon[] = [];
+      while (incorrectAnswers.length < 3) {
+        const candidate =
+          allPokemon[Math.floor(Math.random() * allPokemon.length)];
+        if (
+          candidate.name !== chosen.name &&
+          !incorrectAnswers.some((p) => p.name === candidate.name)
+        ) {
+          incorrectAnswers.push(candidate);
+        }
+      }
+
+      const options = [chosen, ...incorrectAnswers];
+
+      // Shuffle answers
+      for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+      }
+
+      setAllAnswers(options);
+    },
+    [allPokemon]
+  );
+
+  // On game start or after correct guess
+  useEffect(() => {
+    if (gameStarted && remainingPokemon.length > 0 && !activePokemon) {
+      playRound(remainingPokemon);
     }
 
-    // Combine correct and incorrect answers, then shuffle
-    const options = [newActive, ...incorrectAnswers];
-    for (let i = options.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [options[i], options[j]] = [options[j], options[i]];
+    if (
+      gameStarted &&
+      remainingPokemon.length === 0 &&
+      activePokemon === null
+    ) {
+      setGameCompleted(true);
+      setGameStarted(false);
     }
+  }, [gameStarted, remainingPokemon, activePokemon, playRound]);
 
-    setAllAnswers(options);
-  }, [remainingPokemon, allPokemon]);
-
+  // Handle user's answer
   useEffect(() => {
     if (!selectedAnswer || !activePokemon) return;
 
     if (selectedAnswer === activePokemon.name) {
       setScore((prev) => prev + 1);
-      setTimeout(() => playRound(), 300); // Small delay to let user see result
+      setSelectedAnswer(""); // Clear for next round
+      setActivePokemon(null); // Triggers next round
     } else {
       setGameOver(true);
       setGameStarted(false);
     }
-  }, [selectedAnswer, activePokemon, playRound]);
-
-  // Start first round when game starts
-  useEffect(() => {
-    if (gameStarted && remainingPokemon.length > 0 && !activePokemon) {
-      playRound();
-    }
-  }, [gameStarted, remainingPokemon, playRound, activePokemon]);
+  }, [selectedAnswer, activePokemon]);
 
   return (
     <>
       <h1>Normal Game Mode</h1>
 
-      {!gameStarted && !gameOver && (
+      {!gameStarted && !gameOver && !gameCompleted && (
         <button onClick={startGame}>Start Game</button>
       )}
 
-      {gameStarted && !gameOver && activePokemon && (
+      {gameStarted && activePokemon && (
         <>
           <p>Score: {score}</p>
           <p>Who's that Pokémon?</p>
-          <img src={activePokemon!.spriteFront}></img>
-          {allAnswers.map((answer, index) => (
-            <button
-              key={index}
-              onClick={() => setSelectedAnswer(answer.name)}
-              disabled={!!selectedAnswer} // prevent double clicks
-            >
-              {answer.name}
-            </button>
-          ))}
+          <img src={activePokemon.spriteFront} alt="Pokemon" />
+          <div>
+            {allAnswers.map((answer, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedAnswer(answer.name)}
+                disabled={!!selectedAnswer}
+              >
+                {answer.name}
+              </button>
+            ))}
+          </div>
         </>
       )}
 
@@ -118,6 +131,15 @@ function NormalGameMode() {
         <>
           <h2>Game Over!</h2>
           <p>Your final score: {score}</p>
+          <button onClick={startGame}>Play Again</button>
+        </>
+      )}
+
+      {gameCompleted && (
+        <>
+          <h2>🎉 You did it!</h2>
+          <p>You correctly guessed all {allPokemon.length} Pokémon!</p>
+          <p>Final Score: {score}</p>
           <button onClick={startGame}>Play Again</button>
         </>
       )}
