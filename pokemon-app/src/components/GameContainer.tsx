@@ -3,7 +3,10 @@ import NormalGameMode from "../gameModes/NormalGameMode";
 
 function GameContainer() {
   const [gameMode, setGameMode] = React.useState<string>("");
-  const [gameModeChosen] = React.useState<boolean>(false);
+  const [gameModeChosen, setGameModeChosen] = React.useState<boolean>(false);
+
+  // const handleMainMenuClick;
+
   return (
     <>
       {!gameModeChosen && (
@@ -15,7 +18,7 @@ function GameContainer() {
             onClick={() => {
               console.log("game mode = normal");
               setGameMode("normal");
-              // setGameModeChosen(true);
+              setGameModeChosen(true);
             }}
           >
             Normal
@@ -26,7 +29,7 @@ function GameContainer() {
             onClick={() => {
               console.log("game mode = normal-timed");
               setGameMode("normal-timed");
-              // setGameModeChosen(true);
+              setGameModeChosen(true);
             }}
           >
             Normal - Timed
@@ -34,7 +37,10 @@ function GameContainer() {
         </div>
       )}
       <div className="game-mode-container">game mode container</div>
-      {gameMode === "normal" && (
+      {gameModeChosen && (
+        <button onClick={() => setGameModeChosen(false)}>Main Menu</button>
+      )}
+      {gameMode === "normal" && gameModeChosen && (
         <>
           <NormalGameMode />
         </>
