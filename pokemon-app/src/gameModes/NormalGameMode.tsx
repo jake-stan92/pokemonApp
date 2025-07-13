@@ -2,6 +2,7 @@ import og151 from "../assets/og151";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import type { SinglePokemon } from "../components/GameContainerTypes";
 import type { GameEndQuoteGroup } from "./NormalGameModes";
+import "./NormalGameMode.css";
 
 function NormalGameMode() {
   // Limit pool for testing — change slice size as needed
@@ -163,10 +164,18 @@ function NormalGameMode() {
     if (!selectedAnswer || !activePokemon) return;
 
     if (selectedAnswer === activePokemon.name) {
-      // add 1 for correct answer
-      setScore((prevScore) => prevScore + 1);
-      setSelectedAnswer(""); // Clear for next round
-      setActivePokemon(null); // Triggers next round
+      // remove silohouette class
+      const activePokemonImage = document.querySelector(
+        "#active-pokemon-image",
+      );
+      activePokemonImage?.classList.remove("black-silhouette");
+      // short pause until next actions
+      setTimeout(() => {
+        // add 1 for correct answer
+        setScore((prevScore) => prevScore + 1);
+        setSelectedAnswer(""); // Clear for next round
+        setActivePokemon(null); // Triggers next round
+      }, 1000);
     } else {
       // end round if incorrect answer given
       setGameOver(true);
@@ -200,7 +209,12 @@ function NormalGameMode() {
         <>
           <p>Score: {score}</p>
           <p>Who's that Pokémon?</p>
-          <img src={activePokemon.spriteFront} alt="Pokemon" />
+          <img
+            id="active-pokemon-image"
+            className="black-silhouette"
+            src={activePokemon.spriteFront}
+            alt="Pokemon"
+          />
           <div>
             {allAnswers.map((answer, index) => (
               <button

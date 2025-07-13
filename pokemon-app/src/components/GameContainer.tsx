@@ -5,8 +5,6 @@ function GameContainer() {
   const [gameMode, setGameMode] = React.useState<string>("");
   const [gameModeChosen, setGameModeChosen] = React.useState<boolean>(false);
 
-  // const handleMainMenuClick;
-
   return (
     <>
       {!gameModeChosen && (

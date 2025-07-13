@@ -1,0 +1,7 @@
+.black-silhouette {
+  filter: brightness(0) saturate(100%);
+}
+
+#active-pokemon-image {
+  min-height: 100px;
+}
