@@ -1,0 +1,12 @@
+#header {
+  min-height: 35px;
+}
+
+#main-menu-button {
+  border-radius: 5px;
+  background-color: rgb(250, 207, 207);
+  border: 1px solid black;
+  font-size: 0.6rem;
+  padding: 0.5rem 0.25rem;
+  font-family: "Pokemonclassic";
+}

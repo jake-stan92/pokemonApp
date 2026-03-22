@@ -15,4 +15,6 @@
 
 #root {
   height: 100dvh;
+  padding: 1rem;
+  background-color: rgb(251, 251, 242);
 }
