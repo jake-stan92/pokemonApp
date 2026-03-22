@@ -1,13 +1,12 @@
-import './App.css'
-import GameContainer from './components/GameContainer'
+import "./App.css";
+import GameContainer from "./components/GameContainer";
 
 function App() {
-
   return (
     <>
       <GameContainer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
