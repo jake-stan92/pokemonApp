@@ -199,10 +199,24 @@ function NormalGameMode() {
 
   return (
     <>
-      <h1>Normal Game Mode</h1>
+      <h1>Normal</h1>
 
       {!gameStarted && !gameOver && !gameCompleted && (
-        <button onClick={startGame}>Start Game</button>
+        <div className="pre-game-start-menu">
+          <div className="pre-game-description">
+            <div className="pre-game-description-title">
+              <img src="src/assets/images/prof-oak.png"></img>
+              <p>How to play?</p>
+            </div>
+            <ul>
+              <li>You will be presented with a silohouette of a pokemon</li>
+              <li>Simply guess which pokemon it is</li>
+              <li className="pre-game-emphasise">You have 1 life!</li>
+              <li>Make a mistake and its game over!</li>
+            </ul>
+          </div>
+          <button onClick={startGame}>START</button>
+        </div>
       )}
 
       {gameStarted && activePokemon && (

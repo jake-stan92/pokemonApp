@@ -5,3 +5,58 @@
 #active-pokemon-image {
   min-height: 100px;
 }
+
+.pre-game-start-menu {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  font-family: "PokemonClassic";
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 1.5rem 0rem;
+  background-color: rgb(247, 232, 232);
+  max-width: 500px;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.pre-game-start-menu button {
+  border-radius: 5px;
+  background-color: rgb(250, 207, 207);
+  border: 1px solid black;
+  font-size: 0.6rem;
+  padding: 0.5rem;
+  font-family: "Pokemonclassic";
+  margin: auto;
+}
+
+.pre-game-description-title {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.pre-game-description-title img {
+  width: 100px;
+}
+
+.pre-game-description p {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pre-game-description ul {
+  padding-left: 1.5rem;
+}
+
+.pre-game-description li {
+  font-size: 0.7rem;
+  margin-bottom: 0.25rem;
+}
+
+.pre-game-emphasise {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
