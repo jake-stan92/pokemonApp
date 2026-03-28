@@ -7,7 +7,7 @@ function App() {
   const [gameMode, setGameMode] = React.useState<string>("");
   const [gameModeChosen, setGameModeChosen] = React.useState<boolean>(false);
   return (
-    <>
+    <div className="game-wrapper">
       <Header
         gameModeChosen={gameModeChosen}
         setGameModeChosen={setGameModeChosen}
@@ -18,7 +18,7 @@ function App() {
         gameModeChosen={gameModeChosen}
         setGameModeChosen={setGameModeChosen}
       />
-    </>
+    </div>
   );
 }
 
