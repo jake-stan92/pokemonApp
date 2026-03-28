@@ -146,4 +146,8 @@
 
 #game-over-container #active-pokemon-image {
   margin-bottom: 0;
+  min-height: 125px;
+  max-height: 125px;
+  min-width: 125px;
+  max-width: 125px;
 }
