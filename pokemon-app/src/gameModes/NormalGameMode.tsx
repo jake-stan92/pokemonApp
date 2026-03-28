@@ -257,23 +257,35 @@ function NormalGameMode() {
       )}
 
       {gameOver && (
-        <>
-          <h2>Game Over!</h2>
+        <div id="game-over-container" className="game-outcome-container">
+          <h2 className="poke-font-title">Game Over!</h2>
           <p>The correct answer was: {activePokemon!.name.toUpperCase()}</p>
           <p>Your final score: {score}</p>
-          <p>{gameEndQuote}</p>
+          <img
+            id="active-pokemon-image"
+            className=""
+            src={`/public/pokemon-sprites/${activePokemon?.name}.png`}
+            alt="Pokemon"
+          />
+          <div className="game-ending-quote-container">
+            <img src="src/assets/images/prof-oak.png"></img>
+            <p>{gameEndQuote}</p>
+          </div>
           <button onClick={startGame}>Play Again</button>
-        </>
+        </div>
       )}
 
       {gameCompleted && (
-        <>
-          <h2>🎉 You did it!</h2>
+        <div id="game-complete-container" className="game-outcome-container">
+          <h2 className="poke-font-title">🎉 You did it!</h2>
           <p>You correctly guessed all {allPokemon.length} Pokémon!</p>
           <p>Final Score: {score}</p>
-          <p>{gameEndQuote}</p>
+          <div className="game-ending-quote-container">
+            <img src="src/assets/images/prof-oak.png"></img>
+            <p>{gameEndQuote}</p>
+          </div>
           <button onClick={startGame}>Play Again</button>
-        </>
+        </div>
       )}
     </>
   );
