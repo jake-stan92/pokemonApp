@@ -2,6 +2,7 @@ import og151 from "../assets/og151";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import type { SinglePokemon } from "../components/GameContainerTypes";
 import type { GameEndQuoteGroup } from "./NormalGameModes";
+import profOakImg from "./assets/images/prof-oak.png";
 import "./NormalGameMode.css";
 
 function NormalGameMode() {
@@ -210,7 +211,7 @@ function NormalGameMode() {
         <div className="pre-game-start-menu">
           <div className="pre-game-description">
             <div className="pre-game-description-title">
-              <img src="src/assets/images/prof-oak.png"></img>
+              <img src={profOakImg}></img>
               <p>How to play?</p>
             </div>
             <ul>
@@ -237,7 +238,7 @@ function NormalGameMode() {
               id="active-pokemon-image"
               className="black-silhouette"
               // src={activePokemon.spriteFront}
-              src={`/public/pokemon-sprites/${activePokemon.name}.png`}
+              src={`/pokemon-sprites/${activePokemon.name}.png`}
               alt="Pokemon"
             />
             <div id="multiple-choice-answers">
@@ -264,11 +265,11 @@ function NormalGameMode() {
           <img
             id="active-pokemon-image"
             className=""
-            src={`/public/pokemon-sprites/${activePokemon?.name}.png`}
+            src={`/pokemon-sprites/${activePokemon?.name}.png`}
             alt="Pokemon"
           />
           <div className="game-ending-quote-container">
-            <img src="src/assets/images/prof-oak.png"></img>
+            <img src={profOakImg}></img>
             <p>{gameEndQuote}</p>
           </div>
           <button onClick={startGame}>Play Again</button>
@@ -281,7 +282,7 @@ function NormalGameMode() {
           <p>You correctly guessed all {allPokemon.length} Pokémon!</p>
           <p>Final Score: {score}</p>
           <div className="game-ending-quote-container">
-            <img src="src/assets/images/prof-oak.png"></img>
+            <img src={profOakImg}></img>
             <p>{gameEndQuote}</p>
           </div>
           <button onClick={startGame}>Play Again</button>
