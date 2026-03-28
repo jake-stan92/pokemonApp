@@ -1,40 +1,42 @@
-import React from "react";
 import NormalGameMode from "../gameModes/NormalGameMode";
+import "./GameContainer.css";
 
-function GameContainer() {
-  const [gameMode, setGameMode] = React.useState<string>("");
-  const [gameModeChosen] = React.useState<boolean>(false);
+type GameContainerProps = {
+  gameModeChosen: boolean;
+  setGameModeChosen: (value: boolean) => void;
+  gameMode: string;
+  setGameMode: (value: string) => void;
+};
+
+function GameContainer({
+  gameMode,
+  gameModeChosen,
+  setGameMode,
+  setGameModeChosen,
+}: GameContainerProps) {
   return (
     <>
       {!gameModeChosen && (
-        <div className="game-mode-selection">
+        <>
           <h1>Choose Game Mode</h1>
-          <button
-            className="game-mode-selection-button"
-            id="game-mode-select-button-normal"
-            onClick={() => {
-              console.log("game mode = normal");
-              setGameMode("normal");
-              // setGameModeChosen(true);
-            }}
-          >
-            Normal
-          </button>
-          <button
-            className="game-mode-selection-button"
-            id="game-mode-select-button-normal-timed"
-            onClick={() => {
-              console.log("game mode = normal-timed");
-              setGameMode("normal-timed");
-              // setGameModeChosen(true);
-            }}
-          >
-            Normal - Timed
-          </button>
-        </div>
+          <div className="game-mode-selection">
+            <button
+              className="game-mode-selection-button"
+              id="game-mode-select-button-normal"
+              onClick={() => {
+                console.log("game mode = normal");
+                setGameMode("normal");
+                setGameModeChosen(true);
+              }}
+            >
+              Normal
+            </button>
+            <button className="game-mode-selection-button">???</button>
+          </div>
+        </>
       )}
-      <div className="game-mode-container">game mode container</div>
-      {gameMode === "normal" && (
+
+      {gameMode === "normal" && gameModeChosen && (
         <>
           <NormalGameMode />
         </>

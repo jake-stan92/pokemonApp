@@ -2,8 +2,14 @@ import og151 from "../assets/og151";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import type { SinglePokemon } from "../components/GameContainerTypes";
 import type { GameEndQuoteGroup } from "./NormalGameModes";
+import "./NormalGameMode.css";
 
 function NormalGameMode() {
+  // capitalise text received for pokemon names
+  function capitaliseFirst(str: string) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
   // Limit pool for testing — change slice size as needed
   const allPokemon: SinglePokemon[] = og151; // must be at least 4 for multiple options portion of test
 
@@ -163,10 +169,18 @@ function NormalGameMode() {
     if (!selectedAnswer || !activePokemon) return;
 
     if (selectedAnswer === activePokemon.name) {
-      // add 1 for correct answer
-      setScore((prevScore) => prevScore + 1);
-      setSelectedAnswer(""); // Clear for next round
-      setActivePokemon(null); // Triggers next round
+      // remove silohouette class
+      const activePokemonImage = document.querySelector(
+        "#active-pokemon-image",
+      );
+      activePokemonImage?.classList.remove("black-silhouette");
+      // short pause until next actions
+      setTimeout(() => {
+        // add 1 for correct answer
+        setScore((prevScore) => prevScore + 1);
+        setSelectedAnswer(""); // Clear for next round
+        setActivePokemon(null); // Triggers next round
+      }, 1000);
     } else {
       // end round if incorrect answer given
       setGameOver(true);
@@ -190,49 +204,88 @@ function NormalGameMode() {
 
   return (
     <>
-      <h1>Normal Game Mode</h1>
+      <h1>Normal</h1>
 
       {!gameStarted && !gameOver && !gameCompleted && (
-        <button onClick={startGame}>Start Game</button>
+        <div className="pre-game-start-menu">
+          <div className="pre-game-description">
+            <div className="pre-game-description-title">
+              <img src="src/assets/images/prof-oak.png"></img>
+              <p>How to play?</p>
+            </div>
+            <ul>
+              <li>You will be presented with a silohouette of a pokemon</li>
+              <li>Simply guess which pokemon it is</li>
+              <li className="pre-game-emphasise">You have 1 life!</li>
+              <li>Make a mistake and its game over!</li>
+            </ul>
+          </div>
+          <button onClick={startGame}>START</button>
+        </div>
       )}
 
       {gameStarted && activePokemon && (
         <>
-          <p>Score: {score}</p>
-          <p>Who's that Pokémon?</p>
-          <img src={activePokemon.spriteFront} alt="Pokemon" />
-          <div>
-            {allAnswers.map((answer, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedAnswer(answer.name)}
-                disabled={!!selectedAnswer}
-              >
-                {answer.name}
-              </button>
-            ))}
+          <div className="game-mode-container">
+            <p id="current-score" className="poke-font-classic">
+              Score: {score}
+            </p>
+            <p id="game-mode-title" className="poke-font-classic">
+              Who's that Pokémon?
+            </p>
+            <img
+              id="active-pokemon-image"
+              className="black-silhouette"
+              // src={activePokemon.spriteFront}
+              src={`/public/pokemon-sprites/${activePokemon.name}.png`}
+              alt="Pokemon"
+            />
+            <div id="multiple-choice-answers">
+              {allAnswers.map((answer, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedAnswer(answer.name)}
+                  disabled={!!selectedAnswer}
+                  className="normal-game-mode-multiple-choice-button"
+                >
+                  {capitaliseFirst(answer.name)}
+                </button>
+              ))}
+            </div>
           </div>
         </>
       )}
 
       {gameOver && (
-        <>
-          <h2>Game Over!</h2>
+        <div id="game-over-container" className="game-outcome-container">
+          <h2 className="poke-font-title">Game Over!</h2>
           <p>The correct answer was: {activePokemon!.name.toUpperCase()}</p>
           <p>Your final score: {score}</p>
-          <p>{gameEndQuote}</p>
+          <img
+            id="active-pokemon-image"
+            className=""
+            src={`/public/pokemon-sprites/${activePokemon?.name}.png`}
+            alt="Pokemon"
+          />
+          <div className="game-ending-quote-container">
+            <img src="src/assets/images/prof-oak.png"></img>
+            <p>{gameEndQuote}</p>
+          </div>
           <button onClick={startGame}>Play Again</button>
-        </>
+        </div>
       )}
 
       {gameCompleted && (
-        <>
-          <h2>🎉 You did it!</h2>
+        <div id="game-complete-container" className="game-outcome-container">
+          <h2 className="poke-font-title">🎉 You did it!</h2>
           <p>You correctly guessed all {allPokemon.length} Pokémon!</p>
           <p>Final Score: {score}</p>
-          <p>{gameEndQuote}</p>
+          <div className="game-ending-quote-container">
+            <img src="src/assets/images/prof-oak.png"></img>
+            <p>{gameEndQuote}</p>
+          </div>
           <button onClick={startGame}>Play Again</button>
-        </>
+        </div>
       )}
     </>
   );

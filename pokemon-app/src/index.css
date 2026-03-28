@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "PokemonTitle";
+  src: url("/src/assets/fonts/Pokemon_Hollow.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PokemonClassic";
+  src: url("/src/assets/fonts/Pokemon_Classic.ttf") format("truetype");
+}
+
+/* css reset */
+* {
+  margin: 0;
+}
+
+#root {
+  height: 100dvh;
+  padding: 1rem;
+  background-color: rgb(251, 251, 242);
+}
+
+.poke-font-title {
+  font-family: "PokemonTitle";
+}
+
+.poke-font-classic {
+  font-family: "PokemonClassic";
+}
