@@ -5,6 +5,11 @@ import type { GameEndQuoteGroup } from "./NormalGameModes";
 import "./NormalGameMode.css";
 
 function NormalGameMode() {
+  // capitalise text received for pokemon names
+  function capitaliseFirst(str: string) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
   // Limit pool for testing — change slice size as needed
   const allPokemon: SinglePokemon[] = og151; // must be at least 4 for multiple options portion of test
 
@@ -221,24 +226,32 @@ function NormalGameMode() {
 
       {gameStarted && activePokemon && (
         <>
-          <p>Score: {score}</p>
-          <p>Who's that Pokémon?</p>
-          <img
-            id="active-pokemon-image"
-            className="black-silhouette"
-            src={activePokemon.spriteFront}
-            alt="Pokemon"
-          />
-          <div>
-            {allAnswers.map((answer, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedAnswer(answer.name)}
-                disabled={!!selectedAnswer}
-              >
-                {answer.name}
-              </button>
-            ))}
+          <div className="game-mode-container">
+            <p id="current-score" className="poke-font-classic">
+              Score: {score}
+            </p>
+            <p id="game-mode-title" className="poke-font-classic">
+              Who's that Pokémon?
+            </p>
+            <img
+              id="active-pokemon-image"
+              className="black-silhouette"
+              // src={activePokemon.spriteFront}
+              src={`/public/pokemon-sprites/${activePokemon.name}.png`}
+              alt="Pokemon"
+            />
+            <div id="multiple-choice-answers">
+              {allAnswers.map((answer, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedAnswer(answer.name)}
+                  disabled={!!selectedAnswer}
+                  className="normal-game-mode-multiple-choice-button"
+                >
+                  {capitaliseFirst(answer.name)}
+                </button>
+              ))}
+            </div>
           </div>
         </>
       )}

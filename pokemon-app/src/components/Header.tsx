@@ -27,11 +27,7 @@ export default function Header({
       {gameModeChosen ? (
         <>
           {/* <div className="game-mode-container">game mode container</div> */}
-          <button
-            id="main-menu-button"
-            // onClick={() => setGameModeChosen(false)}
-            onClick={() => handleMainMenuClick()}
-          >
+          <button id="main-menu-button" onClick={() => handleMainMenuClick()}>
             &#x2190; Main Menu
           </button>
         </>

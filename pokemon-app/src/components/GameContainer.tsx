@@ -31,17 +31,6 @@ function GameContainer({
             >
               Normal
             </button>
-            {/* <button
-            className="game-mode-selection-button"
-            id="game-mode-select-button-normal-timed"
-            onClick={() => {
-              console.log("game mode = normal-timed");
-              setGameMode("normal-timed");
-              setGameModeChosen(true);
-            }}
-          >
-            Normal - Timed
-          </button> */}
             <button className="game-mode-selection-button">???</button>
           </div>
         </>

@@ -1,10 +1,52 @@
+/* MAIN GAME */
+#current-score {
+  text-align: end;
+  margin-bottom: 0.5rem;
+}
+
 .black-silhouette {
   filter: brightness(0) saturate(100%);
 }
 
 #active-pokemon-image {
-  min-height: 100px;
+  min-height: 200px;
+  min-width: 50%;
+  margin: auto;
+  border: 1px solid black;
+  margin-bottom: 2rem;
 }
+
+#game-mode-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.game-mode-container {
+  margin: auto;
+  width: 100%;
+  border: 1px solid black;
+  display: grid;
+  margin-top: 2rem;
+}
+
+#multiple-choice-answers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 0rem 1rem;
+}
+
+.normal-game-mode-multiple-choice-button {
+  padding: 1rem 1rem;
+  font-family: "PokemonClassic";
+  font-size: 0.75rem;
+  border-radius: 5px;
+  background-color: rgb(250, 207, 207);
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+/* PRE GAME MENU */
 
 .pre-game-start-menu {
   margin-top: 2rem;

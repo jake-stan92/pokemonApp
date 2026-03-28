@@ -18,3 +18,11 @@
   padding: 1rem;
   background-color: rgb(251, 251, 242);
 }
+
+.poke-font-title {
+  font-family: "PokemonTitle";
+}
+
+.poke-font-classic {
+  font-family: "PokemonClassic";
+}
