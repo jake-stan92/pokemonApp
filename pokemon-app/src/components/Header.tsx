@@ -16,7 +16,6 @@ export default function Header({
           {/* <div className="game-mode-container">game mode container</div> */}
           <button
             id="main-menu-button"
-            className="general-button"
             onClick={() => setGameModeChosen(false)}
           >
             &#x2190; Main Menu
