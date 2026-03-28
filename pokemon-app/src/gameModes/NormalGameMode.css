@@ -103,7 +103,6 @@
 
 /* POST GAME MESSAGING */
 .game-outcome-container {
-  border: 1px solid black;
   width: 100%;
   margin-top: 2rem;
   display: grid;
@@ -143,4 +142,8 @@
 
 .game-ending-quote-container img {
   width: 75px;
+}
+
+#game-over-container #active-pokemon-image {
+  margin-bottom: 0;
 }
