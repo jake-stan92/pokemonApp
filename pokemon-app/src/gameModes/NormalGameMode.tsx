@@ -2,7 +2,7 @@ import og151 from "../assets/og151";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import type { SinglePokemon } from "../components/GameContainerTypes";
 import type { GameEndQuoteGroup } from "./NormalGameModes";
-import profOakImg from "./assets/images/prof-oak.png";
+import profOakImg from "../assets/images/prof-oak.png";
 import "./NormalGameMode.css";
 
 function NormalGameMode() {
